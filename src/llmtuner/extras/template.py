@@ -515,3 +515,13 @@ register_template(
     stop_words=[],
     use_history=True
 )
+
+
+register_template(
+    name="mr_chat",
+    prefix="A chat between a curious human (<|HUMAN|>) and an artificial intelligence assistant (<|ASSISTANT|>). "
+           "The assistant gives helpful, detailed, and polite answers to the human's questions.",
+    prompt="<|HUMAN|>: {query}\n\n<|ASSISTANT|>: ",
+    sep="\n",
+    use_history=True
+)
