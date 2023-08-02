@@ -166,6 +166,22 @@ class Llama2Template(Template):
         return encoded_pairs
 
 
+class Llama2Template(Template):
+    def _format_example(self, query, history, prefix):
+        sys = prefix or self.prefix
+        if not sys.startswith("<<SYS>>\n"):
+            sys = f"<<SYS>>\n{sys.strip()}\n<</SYS>>\n\n"
+        history = history if (history and self.use_history) else []
+        history = history + [(query, "")]
+        convs = []
+        for turn_idx, (query_i, resp_i) in enumerate(history):
+            if turn_idx == 0:
+                convs.append([self.prompt.format(query=sys+query_i), resp_i])
+            else:
+                convs.append([(self.sep if turn_idx else prefix) + self.prompt.format(query=query_i), resp_i])
+        return convs
+
+
 templates: Dict[str, Template] = {}
 
 
