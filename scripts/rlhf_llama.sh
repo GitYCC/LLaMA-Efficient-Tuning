@@ -1,17 +1,18 @@
-CUDA_VISIBLE_DEVICES=0,1,2,3 accelerate launch \
+CUDA_VISIBLE_DEVICES=4,5,6,7 accelerate launch \
     --num_processes 4 \
     --gradient_accumulation_steps 8 \
     --config_file accelerate_config.yaml \
-    --main_process_port 29505  \
+    --main_process_port 29502  \
     --num_cpu_threads_per_process 16 \
     --gradient_clipping 0.5 \
     src/train_bash.py \
     --stage ppo \
     --model_name_or_path /home/mediatek/models/Llama-2-13b-chat-hf \
-    --template llama2 \
     --do_train \
-    --dataset alpaca_gpt4_zhtw \
+    --dataset alpaca_gpt4_en \
+    --template llama2 \
     --finetuning_type lora \
+    --resume_lora_training False \
     --checkpoint_dir ./outputs/llama_chat_sft_2/checkpoint-2000 \
     --reward_model ./outputs/llama_rm/checkpoint-250 \
     --output_dir ./outputs/llama_ppo/ \
@@ -19,10 +20,7 @@ CUDA_VISIBLE_DEVICES=0,1,2,3 accelerate launch \
     --gradient_accumulation_steps 8 \
     --lr_scheduler_type cosine \
     --logging_steps 10 \
-    --save_steps 200 \
+    --save_steps 1000 \
     --learning_rate 1e-5 \
     --num_train_epochs 1.0 \
-    --resume_lora_training False \
-    --plot_loss \
-    --max_source_length 64 \
-    --max_target_length 32
+    --plot_loss
