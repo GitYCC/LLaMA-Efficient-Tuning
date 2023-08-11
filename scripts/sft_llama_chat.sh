@@ -5,7 +5,7 @@ CUDA_VISIBLE_DEVICES=0,1,2,3 accelerate launch --config_file accelerate_config.y
     --do_train \
     --dataset instruct_tc_and_evol \
     --finetuning_type lora \
-    --output_dir ./outputs/llama_chat_sft \
+    --output_dir ./outputs/llama_chat_sft_2 \
     --overwrite_cache \
     --per_device_train_batch_size 2 \
     --gradient_accumulation_steps 8 \
@@ -15,5 +15,4 @@ CUDA_VISIBLE_DEVICES=0,1,2,3 accelerate launch --config_file accelerate_config.y
     --learning_rate 5e-5 \
     --num_train_epochs 3.0 \
     --plot_loss \
-    --fp16 \
-    --dev_ratio 0.0001
+    --fp16

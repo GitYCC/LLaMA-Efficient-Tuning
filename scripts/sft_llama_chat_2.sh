@@ -1,0 +1,26 @@
+CUDA_VISIBLE_DEVICES=4,5,6,7 accelerate launch \
+    --num_processes 4 \
+    --gradient_accumulation_steps 8 \
+    --config_file accelerate_config.yaml \
+    --main_process_port 29502  \
+    --num_cpu_threads_per_process 16 \
+    --gradient_clipping 0.5 \
+    src/train_bash.py \
+    --stage sft \
+    --model_name_or_path ./models/Llama2-test-13006-step50/ \
+    --template llama2 \
+    --do_train \
+    --dataset instruct_tc_and_evol \
+    --finetuning_type lora \
+    --output_dir ./outputs/llama_chat_sft_3 \
+    --overwrite_cache \
+    --per_device_train_batch_size 2 \
+    --gradient_accumulation_steps 8 \
+    --max_grad_norm 0.5 \
+    --lr_scheduler_type cosine \
+    --logging_steps 10 \
+    --save_steps 1000 \
+    --learning_rate 5e-5 \
+    --num_train_epochs 3.0 \
+    --plot_loss \
+    --fp16
