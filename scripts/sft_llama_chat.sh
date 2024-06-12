@@ -1,0 +1,18 @@
+CUDA_VISIBLE_DEVICES=0,1,2,3 accelerate launch --config_file accelerate_config.yaml --main_process_port 29503  src/train_bash.py \
+    --stage sft \
+    --model_name_or_path /home/mediatek/models/Llama-2-13b-chat-hf \
+    --template llama2 \
+    --do_train \
+    --dataset instruct_tc_and_evol \
+    --finetuning_type lora \
+    --output_dir ./outputs/llama_chat_sft_2 \
+    --overwrite_cache \
+    --per_device_train_batch_size 2 \
+    --gradient_accumulation_steps 8 \
+    --lr_scheduler_type cosine \
+    --logging_steps 10 \
+    --save_steps 1000 \
+    --learning_rate 5e-5 \
+    --num_train_epochs 3.0 \
+    --plot_loss \
+    --fp16

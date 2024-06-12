@@ -1,0 +1,25 @@
+CUDA_VISIBLE_DEVICES=0,1,2,3 accelerate launch \
+    --num_processes 4 \
+    --gradient_accumulation_steps 16 \
+    --config_file accelerate_config.yaml \
+    --main_process_port 29503  \
+    --num_cpu_threads_per_process 16 \
+    --gradient_clipping 0.5 \
+    src/train_bash.py \
+    --stage rm \
+    --model_name_or_path /home/mediatek/models/Llama-2-13b-chat-hf \
+    --template llama2 \
+    --do_train \
+    --dataset comparison_gpt4_zhtw \
+    --finetuning_type lora \
+    --output_dir ./outputs/llama_rm \
+    --per_device_train_batch_size 1 \
+    --gradient_accumulation_steps 16 \
+    --max_grad_norm 0.5 \
+    --lr_scheduler_type cosine \
+    --logging_steps 10 \
+    --save_steps 250 \
+    --learning_rate 1e-5 \
+    --num_train_epochs 1.0 \
+    --plot_loss \
+    --fp16
